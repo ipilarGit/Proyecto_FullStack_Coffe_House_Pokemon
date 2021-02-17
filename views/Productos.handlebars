@@ -1,0 +1,77 @@
+<h1 class="text-center">Ingreso de Productos</h1>
+<div class="p-2">
+
+{{>Headeradmin}}
+
+    {{> Productos/Form }}
+
+    {{> Productos/Table}}
+
+    {{> Productos/Modal}}
+
+</div>
+
+<script>
+    if (document.getElementById('admin')) document.getElementById('admin').style.display = "block";
+    let productId;
+
+    let categories = JSON.parse('{{{categoriesData}}}');
+    let categoriesNames;
+    categoriesNames = categories.map(c => c.name)
+
+    $("form").submit((e) => {
+        e.preventDefault()
+        const parent = e.target.parentElement
+        const method = parent.className == "modal-body" ? "put" : "post"
+        validationCreateOrUpdate(e.target, method)
+    })
+
+    const validationCreateOrUpdate = async (form, method) => {
+
+        let camposLength = form.getElementsByTagName("label").length;
+        let elements = Array.from(form).map(i => i.type == "text" || i.type == "number" || i.type == "select-one" ? i.value : i.type == "file" ? i.files[0] : false);
+
+
+        elements = elements.filter(i => i);
+        console.log(elements)
+
+        let length_Final = elements.length;
+        let [category, description, price, stock, image] = elements
+
+
+        let validate = true;
+
+        length_Final < camposLength ? 
+            (alert("Favor verifique que se han ingresado todos los datos"), validate = false)
+            : stock < 0 || price < 0 ? 
+                (alert("El stock y el precio deben ser solo números positivos"), validate = false)
+                : image && image.size > 5000000 || image && image.type.split("/")[0] !== "image" ? 
+                    method !== "put" && image ? 
+                        (alert("El archivo debe ser una imagen de máximo 5MB"), validate = false)
+                    : !categoriesNames.includes(category) ? (alert("Alerta de hack"), validate = false) : false : false;
+
+        category = categories.find(c => c.name == category).id;
+
+        let formDataImage = new FormData()
+        formDataImage.append("image", image)
+        if (validate) {
+
+            console.log('form', form)
+            const urlImage = image ? (await axios.post("/files", formDataImage)).data : $(".modal-body #preview").attr("src").substr(1);
+            await axios[method](`/productos${method == "put" ? `/${productId}` : ''}`,
+                [stock, price, urlImage, category, description]
+            )
+            productId = null
+        }
+        location.reload()
+    }
+
+    $('input[type="file"]').change(e => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        const preview = e.target.parentElement.getElementsByTagName("img")[0];
+        reader.onloadend = () => preview.setAttribute("src", reader.result);
+        reader.readAsDataURL(file);
+    })
+
+</script>

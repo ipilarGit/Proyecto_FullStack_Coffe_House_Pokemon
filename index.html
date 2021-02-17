@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coffe House Coffet</title>
+</head>
+
+<body>
+    <form id="myForm" name="myForm" action="https://webpay3gint.transbank.cl/webpayserver/initTransaction" method="POST">
+        <input type="hidden" name="token_ws" value="01ab91faae01cd623f1b06ffe889270e08af35dcb185ff3501e33c3997b08e39" />
+    </form>
+    <script>
+        window.onload = function() {
+            document.forms["myForm"].submit();
+        };
+    </script>
+</body>
+
+</html>

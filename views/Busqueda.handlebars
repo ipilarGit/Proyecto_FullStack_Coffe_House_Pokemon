@@ -1,0 +1,68 @@
+<div id="Catalogo" class="p-5">
+    <div class="container">
+        <h6>Buscador: <input list="browsers" id="buscadorView" type="text" class="form-control">
+
+            <datalist id="browsers">
+                {{#each all_ProductsLabels}}
+                <option value="{{this}}">
+                    {{/each}}
+            </datalist>
+
+            </input>
+        </h6>
+        <h6>Filtrar por:
+            <select id="filtro" class="form-control">
+                <option selected disabled>
+                    <--- Seleccione el campo a filtrar --->
+                </option>
+                {{#each filtros}}
+                <option value="{{this}}"> {{this}} </option>
+                {{/each}}
+
+            </select>
+
+        </h6>
+        <button class="btn btn-success" onclick="buscar()"> Buscar </button>
+
+        <h1 class="mt-5">Búsqueda de productos</h1>
+        <hr>
+        <div class="row mx-0">
+            {{#unless productos}}
+            <h6>No se consiguieron resultados en su búsqueda</h6>
+            {{/unless}}
+
+            {{#each productos}}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3">
+
+                <div class="card">
+                    <img class="card-img-top" src="/{{this.image}}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.description}}</h5>
+                        <p class="card-text">
+                            {{this.category}}
+                        </p>
+                        <b> {{this.price}} </b>
+                        <a href="/producto/{{this.id}}" class="d-block">
+                            <button class="btn btn-primary">
+                                Ver más
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    const buscar = () => {
+        let buscador = $("#buscadorView").val()
+        let filtro = $("#filtro").val()
+        !buscador ? alert("Debe escribir algo en la busqueda") :
+            window.location = `/busqueda/${filtro ? filtro : "todos"}/${buscador}`;
+
+    }
+</script>

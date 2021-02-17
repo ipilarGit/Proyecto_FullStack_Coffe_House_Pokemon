@@ -1,0 +1,106 @@
+<header id="admin">
+    <nav class="navbar fixed-top navbar-light navbar-expand-md bg-dark">
+        <a class="text-white navbar-brand" href="/">
+            <i class="text-warning fas fa-coffee"></i>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav navbar-right ml-auto">
+                <li class="nav-item active">
+                    <a href="/" class="nav-link text-white">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/categoria/cafes" class="nav-link text-white">Cafés</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/categoria/cafescold" class="nav-link text-white">Cafés Frios</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/categoria/bebidas" class="nav-link text-white">Bebidas</a>
+                </li>
+            </ul>
+
+            <div class="navbar-nav ml-auto">
+                <li  id="logoutt">
+                    <a href="/" class="nav-link text-white" >Logout</a>
+                </li>
+            </div>
+
+        </div>
+    </nav>
+</header>
+
+<div class="container py-5">
+    <h1 class="text-center">Ingreso de Administrador</h1>
+
+    <div id="formLogin">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Username</label>
+            <input id="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                placeholder="Ingrese su username">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="passwordAdmin" placeholder="Password">
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btnLoginAdmin">Login</button>
+    </div>
+</div>
+
+
+
+<script>
+
+if (document.getElementById('admin')) document.getElementById('admin').style.display = "block"; 
+
+ if (document.getElementById('logoutt')) document.getElementById('logoutt').style.display = "none";
+
+
+     $("#btnLoginAdmin").click(async (e) => {
+        const username = $("#username").val()
+        const password = $("#passwordAdmin").val()
+        try {
+
+            const { data } = await axios.post("/admin", {
+                username, password
+            })
+
+            console.log('data en admin', data);
+            if (data) {
+                const token = data
+                console.log('token', token)
+                alert("Administrador Logeado con éxito");
+
+                localStorage.setItem("token", token)
+                window.location = `/admin/productos?token=${token}`
+            }else{
+                Alert('Username o clave incorrecta')
+            }
+        } catch (e) {
+          alert("Hubo un error...username o clave incorrecta")
+            console.log(e)
+        }
+    })
+
+</script>
+
+
+  {{!--   if (document.getElementById('logoutt')) document.getElementById('logoutt').style.display = "none";
+    if (document.getElementById('logout')) document.getElementById('logout').style.display = "none";
+    if (document.getElementById('login')) document.getElementById('login').style.display = "none";
+    if (document.getElementById('registrese')) document.getElementById('registrese').style.display = "none";
+    if (document.getElementById('carrito')) document.getElementById('carrito').style.display = "none";
+    if (document.getElementById('busqueda')) document.getElementById('busqueda').style.display = "none";
+    if (document.getElementById('buscador')) document.getElementById('buscador').style.display = "none";
+ --}}
+
+ 
+{{!-- if (document.getElementById('principal')) document.getElementById('principal').style.display = "none";
+if (document.getElementById('admin')) document.getElementById('admin').style.display = "block"; --}}
+ 

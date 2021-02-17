@@ -1,0 +1,139 @@
+    body {
+        margin: 0;
+        border: 0;
+        background-color: #f8f1e7;
+        font-family: 'Satisfy', cursive;
+    }
+    
+    .formulario {
+        border-radius: 80px
+    }
+    
+    .bg-brown {
+        background: #9b6514;
+    }
+    /* body {
+    width: 100%;
+    height: 100%;
+    letter-spacing: 0.03em;
+    font-size: 15px;
+    line-height: 1.52;
+    color: #5a7a8b;
+    font-size: 16px;
+     font-family: 'Satisfy', cursive;
+
+overflow-x: hidden;
+background-color: #d8bfad
+}
+*/
+    
+    form .btn-warning {
+        display: none;
+    }
+    
+    .modal-body .btn-warning {
+        display: block;
+    }
+    
+    .modal-body .btn-primary {
+        display: none;
+    }
+    
+    .title {
+        text-align: center;
+        font-size: 40px;
+        margin-top: 100px;
+        font-weight: 100;
+        font-family: 'Architects Daughter', cursive;
+    }
+    
+    .card {
+        width: 200px;
+        height: 332px;
+        color: #5a7a8b;
+        border-radius: 8px;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        margin: 20px;
+        text-align: center;
+        transition: all 0.25s;
+        display: inline-block;
+    }
+    
+    .card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    .container .card img {
+        margin-top: 8px;
+        width: 170px;
+        height: 180px;
+    }
+    
+    .container .card a {
+        font-weight: 500;
+        text-decoration: none;
+        color: #557285;
+    }
+    
+    footer .fab {
+        color: #ffffff;
+        text-decoration: none;
+    }
+    /*     .container {
+          width: 100%; 
+    
+    max-width: 1200px;
+    height: 430px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: auto;
+}*/
+    /* 
+.container .card {
+    width: 330px;
+    height: 200px;
+    border-radius: 8px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    margin: 20px;
+    text-align: center;
+    transition: all 0.25s;
+    display: inline-block;
+}
+ */
+    /*
+.container .card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
+}
+
+.container .card img {
+    width: 330px;
+    height: 220px;
+}
+
+.container .card h4 {
+    font-weight: 600;
+}
+
+.container .card p {
+    padding: 0 1rem;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.container .card a {
+    font-weight: 500;
+    text-decoration: none;
+    color: #557285;
+}
+
+*/
+    /*  */
+    
+    .imgFilter {
+        filter: brightness(0.80);
+    }

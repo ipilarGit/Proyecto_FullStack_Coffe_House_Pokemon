@@ -1,0 +1,69 @@
+<h1 class="text-center">Tabla de Productos</h1>
+<table class="table table-bordered table-hover table-sm">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Categoría</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Imagen</th>
+            <th scope="col">Fecha de Creación</th>
+            <th scope="col">Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each productos}}
+        <tr>
+            <th scope="row">{{this.id}}</th>
+            <td>{{this.description}}</td>
+            <td>{{this.category}}</td>
+            <td>{{this.price}}</td>
+            <td>{{this.stock}}</td>
+            <td><img src="/{{this.image}}" width="100" class="rounded-circle" /></td>
+            <td>{{formatDate this.created}}</td>
+            <td>
+                <button class="btn btn-warning" onclick="editProduct({{this.id}})">Editar</button>
+                <button class="btn btn-danger" onclick="deleteProduct({{this.id}})">Eliminar</button>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<script>
+    const productos = JSON.parse(`{{{products}}}`);
+
+    const editProduct = (id) => {
+        
+        productId = id;
+        const producto = productos.find(p => p.id == id)
+        const form = $(".modal-body form")[0]
+        let elements = Array.from(form).map(i => i.type == "text" || i.type == "number" || i.type == "select-one" ? i : i.type == "file" ? i : false)
+        elements = elements.filter(i => i);
+
+        console.log(elements);
+        elements.forEach(e => {
+            const dataTarget = e.attributes["data-target"].value;
+            if (e.type == "text" || e.type == "number") e.value = producto[dataTarget];
+            if (e.type == "select-one") e.value = producto[dataTarget]
+            if (e.type == "file") {
+                $(".modal-body #preview").attr("src", `/${producto.image}`)
+            }
+        })
+        $("#exampleModal").modal("show")
+    }
+
+    const deleteProduct = async (id) => {
+        const decision = confirm("¿Estás seguro que deseas eliminar este proucto?")
+        if (decision) {
+            try {
+                const consulta = await axios.delete(`/productos/${id}`);
+                alert('Producto ELiminado con exito')
+                location.reload()
+            } catch (e) {
+                alert(e.data.message)
+            }
+        }
+    }
+</script>

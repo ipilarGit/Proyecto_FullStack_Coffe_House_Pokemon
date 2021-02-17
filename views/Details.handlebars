@@ -1,0 +1,42 @@
+<div class="row p-5">
+
+    <div class="col-6">
+        <img src="/{{producto.image}}" class="rounded" alt="imagen de producto">
+    </div>
+
+    <div class="col-6">
+        <p> Descripción: {{producto.description}}</p>
+        <p> Categoria: {{producto.category}}</p>
+        <h4> Precio: {{producto.price}}</h4>
+        <p> Stock: {{producto.stock}}</p>
+    </div>
+</div>
+
+<button onclick="addToCart()" {{#unless producto.stock }} disabled {{/unless}} type="submit"
+    class="btn btn-primary d-block mx-auto mt-5">Agregar al carrito</button>
+
+
+<script>
+
+    const producto = JSON.parse('{{{productoData}}}')
+    const addToCart = () => {
+
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || []
+        const exists = carrito.some(p => p.id == producto.id)
+        if (carrito.length > 0 && exists) {
+            carrito = carrito.map(p => {
+                if (p.id == producto.id) {
+                    p.cant++;
+                    p.total = p.cant * p.price
+                }
+                return p
+            })
+        } else {
+            producto.cant = 1
+            producto.total = producto.price
+            carrito.push(producto)
+        }
+        localStorage.setItem("carrito", JSON.stringify(carrito))
+
+    }
+</script>

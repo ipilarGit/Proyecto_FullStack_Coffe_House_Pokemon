@@ -1,0 +1,52 @@
+<div class="row" >
+    <div class="col-md-4 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                Account Register
+            </div>
+            <div class="card-body">
+                <form action="/usuarios/signup" method="POST">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="nombre" name="nombre" />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" placeholder="Email" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Password"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password"/>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-block" onclick="Registrese()">SignUp</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Registrarser -->
+{{!-- <div class="modal fade" role="dialog" id="signUpModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/usuarios/signup" method="POST">
+                <div class="modal-body detallesModal">
+                    <div class="row">
+                        <div class="col">Nombre:</div>
+                        <div class="col"><input class="form-control" id="nombre" name="nombre" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Correo:</div>
+                        <div class="col"><input class="form-control" id="email" name="email" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Contraseña:</div>
+                        <div class="col">
+                            <input type="password" class="form-control" id="password" name="password" />
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-block" onclick="Registrese()">SignUp</button>
+            </form>
+        </div>
+    </div>
+</div> --}}

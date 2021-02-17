@@ -1,0 +1,21 @@
+<script>
+
+    alert();
+        if (document.getElementById('logout')) logout = document.getElementById('logout')
+
+logout.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    try {
+           const user = JSON.parse(localStorage.getItem("user"))
+            const { data } = await axios.get("/logout")
+          console.log('data de logout ',data)  
+           localStorage.removeItem("user");
+window.location = "/"
+        } catch (e) {
+            alert("Saliendo")
+            console.log(e)
+        }
+}); 
+
+</script>

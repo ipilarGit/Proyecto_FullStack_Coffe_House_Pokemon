@@ -1,0 +1,87 @@
+<div id="Catalogo" class="p-2">
+    <div class="container">
+        <h1 class="text-center">Nuestros Productos</h1>
+        <div class="row">
+            {{#each productos}}
+            {{!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-3"> --}}
+                <div class="col-sm-4">
+                    <div class="card">
+                        <img class="card-img-top" src="{{this.image}}" alt="Card image cap" class="img-rounded">
+                        <div class="card-body">
+                            <h5 class="card-title">{{this.description}}</h5>
+                            <b class="text-dark"> $ {{this.price}} </b>
+                            <a href="/producto/{{this.id}}" class="d-block">
+                                <button class="btn btn-primary">
+                                    Ver más
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="d-flex justify-content-center">
+        <nav aria-label="...">
+            <ul class="pagination">
+
+
+
+                <li class="page-item" id="next">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+
+
+
+
+            </ul>
+        </nav>
+    </div>
+
+    <script>
+
+        const pageQ = {{ pageQ }}
+        const page = {{ pag }};
+        const pageQArray = [];
+        for (let i = 1; i <= pageQ; i++) {
+            pageQArray.push(i);
+        }
+
+        $(".pagination").prepend(
+
+            `
+            <a ${page > 1 ? `href="/?pag=${page - 1}"` : ''} > 
+
+                <li class="page-item disabled" id="previous">
+                <span class="page-link">Previous</span>
+            </li>
+
+            </a>
+            `
+        )
+        pageQArray.forEach((p, i) => {
+            $("#next").before(
+
+                i + 1 == page ? `
+             <a href="/?pag=${page}">
+             <li class="page-item active">
+                <span class="page-link">
+                    ${p}
+                    <span class="sr-only">(current)</span>
+                </span>
+                </li>
+                </a>
+             
+             ` :
+                    `
+                <a href="/?pag=${i + 1}">
+            <li class="page-item"><p class="page-link" href="#">${p}</p></li>
+             </a>
+            `
+
+            )
+        })
+    </script>

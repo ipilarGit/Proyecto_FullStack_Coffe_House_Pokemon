@@ -1,0 +1,66 @@
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Registrese</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-register">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="signup_nombre" aria-describedby="emailHelp"
+                            placeholder="Ingrese su nombre">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="signup_email" class="form-control" placeholder="E-mail" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="signup_password" class="form-control"
+                            placeholder="Password mínimo 6 caracteres" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="confirmed_signup_password" class="form-control"
+                            placeholder="Password mínimo 6 caracteres" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#form-register").submit((e) => {
+        e.preventDefault()
+        const form = e.target
+        let elements = Array.from(form).map(i => i.type !== "file" ? i.value : i.files)
+        elements = elements.filter(i => i);
+        console.log(elements);
+        let length_Final = elements.length
+        let [signup_email, signup_nombre, signup_password, confirmed_signup_password] = elements
+        console.log(elements);
+        if (signup_password !== confirmed_signup_password) {
+            alert("Las contraseñas deben ser iguales");
+        } else {
+            try {
+                axios.post("/registro", {
+                    signup_email, signup_nombre, signup_password,
+                })
+            alert("Usuario registrado con éxito.")
+             $("#form-register").reset();
+            $("#signupModal").modal("hide");
+
+          {{!--   window.location = "/login" --}}
+           
+            } catch (e) {
+        alert("Hubo un error al registrarse.")
+        console.log(e)
+    }
+        }
+    })
+
+</script>

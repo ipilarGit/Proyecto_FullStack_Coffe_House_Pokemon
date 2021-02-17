@@ -1,0 +1,97 @@
+<div class="container p-5">
+    <h1 class="text-center">Carrito de Compra</h1>
+
+    <div class="row p-5 productos">
+
+    </div>
+    <h1>Total: <span id="total"></span></h1>
+    <button class="btn btn-success" onclick="pagar()">Pagar</button>
+</div>
+
+<form class="d-none" id="myForm" name="myForm" action="https://webpay3gint.transbank.cl/webpayserver/initTransaction"
+    method="POST">
+    <input type="hidden" name="token_ws" id="tokenTBK" value="" />
+</form>
+
+<script>
+
+    let carrito = JSON.parse(localStorage.getItem("carrito"))
+
+    carrito.forEach(p => {
+        $(".productos").append(`
+        
+        <div class="col-12 row">
+            <div class="col-7">
+                <img src="/${p.image}" class="img-fluid" alt="">
+            </div>
+            <div class="col-5">
+                <h4>Descripción: ${p.description}</h4>
+                <h4>Categoria: ${p.category}</h4>
+                <button class="btn btn-dark" onclick="minus('${p.id}')">- </button>
+                <h3 class="d-inline">${p.cant}</h3>
+                <button class="btn btn-dark" onclick="plus('${p.id}')">+ </button>
+                <h4>Total: <span style="font-size: 30px;">$${p.total}</span>
+            </div>
+            <hr class="w-100">
+        </div>
+        `)
+    })
+
+
+    const minus = (id) => {
+        producto = carrito.find(p => p.id == id)
+        carrito = carrito.map(p => {
+            if (p.id == id) {
+                p.cant--
+                p.total = p.cant * p.price
+                return p
+            }
+            return p
+        })
+        if (producto.cant < 1) {
+            carrito = carrito.filter(p => p.id != id)
+        }
+        localStorage.setItem("carrito", JSON.stringify(carrito))
+        location.reload()
+    }
+
+    const plus = (id) => {
+        producto = carrito.find(p => p.id == id);
+
+        if (producto.stock < producto.cant + 1) {
+            alert("Sorry no tenemos stock")
+            return false
+        }
+
+        // Considerar que esta función debiera estar sujeta a cambios en tiempo real del stock y el precio del producto
+
+        carrito = carrito.map(p => {
+            if (p.id == id) {
+                p.cant++
+                p.total = p.cant * p.price
+                return p
+            }
+            return p
+        });
+        localStorage.setItem("carrito", JSON.stringify(carrito))
+        location.reload()
+    }
+
+    let total = carrito.map(p => p.total).reduce((a, b) => a + b)
+    $("#total").html(total)
+
+    const pagar = async () => {
+        try {
+
+            const resultado = await axios.post("/transaction", { amount: total })
+            const { data } = resultado
+            const { token } = data
+            $("#tokenTBK").val(token)
+            console.log(token)
+            $("#myForm").submit()
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+</script>

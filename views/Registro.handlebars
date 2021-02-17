@@ -1,0 +1,56 @@
+<div class="container py-5">
+    <form id="formRegister">
+        <div class="form-group">
+            <label for="email">E-Mail</label>
+            <input value="ejemplo@ejemplo.com" type="email" class="form-control" id="email"
+                aria-describedby="emailHelp" placeholder="Ingrese su e-mail">
+        </div>
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input  type="text" class="form-control" id="nombre"
+                aria-describedby="emailHelp" placeholder="Ingrese su nombre">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input  type="password" class="form-control" id="password"
+                placeholder="Password mínimo 6 caracteres">
+        </div>
+        <div class="form-group">
+            <label for="confirmedpassword">Confirmar Password</label>
+            <input type="password" class="form-control" id="confirmedpassword"
+                placeholder="Password mínimo 6 caracteres">
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btnRegister">Registrar</button>
+    </form>
+</div>
+
+<script>
+
+    $("#formRegister").submit((e) => {
+        e.preventDefault()
+        const form = e.target
+        let elements = Array.from(form).map(i => i.type !== "file" ? i.value : i.files)
+        elements = elements.filter(i => i);
+        console.log(elements);
+        let length_Final = elements.length
+        let [email, nombre, password, passwordConfirm] = elements
+        console.log(elements);
+        if (password !== passwordConfirm) {
+            alert("Las contraseñas deben ser iguales");
+        } else {
+            try {
+                axios.post("/registro", {
+                    email, nombre, password,
+                })
+                alert("Usuario registrado con éxito.")
+
+                window.location = "/login"
+            } catch (e) {
+                alert("Hubo un error al registrarse.")
+                console.log(e)
+            }
+        }
+    })
+
+</script>

@@ -1,0 +1,41 @@
+<form class="container formulario">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Categoría</label>
+        <select class="form-control" id="categories" data-target="category">
+            <option selected disabled>
+                <--- Seleccione la categoría --->
+                    {{#each categories}}
+            <option value={{this.name}}>{{this.name}}</option>
+            {{/each}}
+            </option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="exampleInputEmail1">Descripción</label>
+        <input data-target="description" class="form-control" placeholder="Ingrese la descripción del producto">
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Precio</label>
+        <input data-target="price" class="form-control" type="number" placeholder="Ingrese el precio del producto">
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Stock</label>
+        <input class="form-control" data-target="stock" type="number" placeholder="Ingrese cantidad">
+    </div>
+
+    <div class="form-group d-flex flex-column">
+        <img id="preview" width="150" />
+        <label for="exampleInputEmail1">Imagen</label>
+        <input id="myfile" class="form-control" data-target="image" type="file"
+            placeholder="Ingrese imagen del producto">
+        <small id="passwordHelpInline" class="text-muted">
+            Peso máximo: 5 MB
+        </small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Agregar</button>
+    <button type="submit" class="btn btn-warning">Actualizar</button>
+</form>

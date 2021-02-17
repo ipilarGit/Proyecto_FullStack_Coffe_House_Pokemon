@@ -1,0 +1,10 @@
+
+<script>
+
+
+     if(document.getElementById('logoutt')) document.getElementById('logoutt').style.display="block";
+    $('#logoutt').click(()=>{
+        const token = localStorage.getiTem("token");
+        localStorage.removeItem('token');
+    })
+</script>
